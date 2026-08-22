@@ -2,11 +2,11 @@ package socketfit
 
 import java.lang.reflect.Type
 
-internal class BuiltInConverters : MessageConverter.Factory {
+internal class BuiltInConverters : Converter.Factory {
     override fun outgoingMessageConverter(
         type: Type,
         annotations: Array<Annotation>
-    ): socketfit.MessageConverter<*, Message>? {
+    ): Converter<*, Message>? {
         return when (type) {
             Message::class.java -> MessageConverter
             String::class.java -> TextOutgoingConverter
@@ -18,7 +18,7 @@ internal class BuiltInConverters : MessageConverter.Factory {
     override fun incomingMessageConverter(
         type: Type,
         annotations: Array<Annotation>
-    ): socketfit.MessageConverter<Message, *>? {
+    ): Converter<Message, *>? {
         return when (type) {
             Message::class.java -> MessageConverter
             String::class.java -> TextIncomingConverter
@@ -27,13 +27,13 @@ internal class BuiltInConverters : MessageConverter.Factory {
         }
     }
 
-    object MessageConverter : socketfit.MessageConverter<Message, Message> {
+    object MessageConverter : Converter<Message, Message> {
         override fun convert(value: Message): Message {
             return value
         }
     }
 
-    object TextIncomingConverter : socketfit.MessageConverter<Message, String> {
+    object TextIncomingConverter : Converter<Message, String> {
         override fun convert(value: Message): String {
             return when (value) {
                 is Message.Text -> value.value
@@ -46,13 +46,13 @@ internal class BuiltInConverters : MessageConverter.Factory {
         }
     }
 
-    object TextOutgoingConverter : socketfit.MessageConverter<String, Message> {
+    object TextOutgoingConverter : Converter<String, Message> {
         override fun convert(value: String): Message {
             return Message.Text(value)
         }
     }
 
-    object BinaryIncomingConverter : socketfit.MessageConverter<Message, ByteArray> {
+    object BinaryIncomingConverter : Converter<Message, ByteArray> {
         override fun convert(value: Message): ByteArray {
             return when (value) {
                 is Message.Binary -> value.value
@@ -65,7 +65,7 @@ internal class BuiltInConverters : MessageConverter.Factory {
         }
     }
 
-    object BinaryOutgoingConverter : socketfit.MessageConverter<ByteArray, Message> {
+    object BinaryOutgoingConverter : Converter<ByteArray, Message> {
         override fun convert(value: ByteArray): Message {
             return Message.Binary(value)
         }

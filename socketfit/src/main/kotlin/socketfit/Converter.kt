@@ -7,14 +7,14 @@ import java.lang.reflect.Type
  * [a factory][Factory] which is [installed][Socketfit.Builder.addConverterFactory]
  * into the [Socketfit] instance.
  */
-interface MessageConverter<F, T> {
+interface Converter<F, T> {
     /**
      * Converts [value] to an instance of [T].
      */
     fun convert(value: F): T
 
     /**
-     * Creates [MessageConverter] instances based on a type and target usage.
+     * Creates [Converter] instances based on a type and target usage.
      */
     interface Factory {
         /**
@@ -24,7 +24,7 @@ interface MessageConverter<F, T> {
         fun outgoingMessageConverter(
             type: Type,
             annotations: Array<Annotation>,
-        ): MessageConverter<*, Message>?
+        ): Converter<*, Message>?
 
         /**
          * Returns a converter for converting an incoming WebSocket message to [type],
@@ -33,6 +33,6 @@ interface MessageConverter<F, T> {
         fun incomingMessageConverter(
             type: Type,
             annotations: Array<Annotation>,
-        ): MessageConverter<Message, *>?
+        ): Converter<Message, *>?
     }
 }
