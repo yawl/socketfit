@@ -4,73 +4,72 @@ import kotlinx.serialization.BinaryFormat
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialFormat
-import kotlinx.serialization.SerializationException
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.StringFormat
 import kotlinx.serialization.serializer
 import socketfit.Message
 import java.lang.reflect.Type
 
-internal sealed class Serializer {
-    abstract fun <T> fromMessage(
-        loader: DeserializationStrategy<T>,
-        message: Message
-    ): T
+internal interface Serializer {
+    interface Text : Serializer {
+        fun <T> fromMessage(
+            loader: DeserializationStrategy<T>,
+            message: Message.Text
+        ): T
 
-    abstract fun <T> toMessage(
-        saver: SerializationStrategy<T>,
-        value: T,
-    ): Message
+        fun <T> toMessage(
+            saver: SerializationStrategy<T>,
+            value: T,
+        ): Message.Text
+    }
 
-    protected abstract val format: SerialFormat
+    interface Binary : Serializer {
+        fun <T> fromMessage(
+            loader: DeserializationStrategy<T>,
+            message: Message.Binary
+        ): T
+
+        fun <T> toMessage(
+            saver: SerializationStrategy<T>,
+            value: T,
+        ): Message.Binary
+    }
+
+    val format: SerialFormat
 
     fun serializer(type: Type): KSerializer<Any> = format.serializersModule.serializer(type)
 
-    class FromString(override val format: StringFormat) : Serializer() {
+    class FromString(override val format: StringFormat) : Text {
         override fun <T> fromMessage(
             loader: DeserializationStrategy<T>,
-            message: Message
+            message: Message.Text
         ): T {
-            val string = when (message) {
-                is Message.Text -> message.value
-                is Message.Binary -> {
-                    throw SerializationException(
-                        "Expected a text WebSocket message, but received a binary message"
-                    )
-                }
-            }
+            val string = message.value
             return format.decodeFromString(loader, string)
         }
 
         override fun <T> toMessage(
             saver: SerializationStrategy<T>,
             value: T,
-        ): Message {
+        ): Message.Text {
             val string = format.encodeToString(saver, value)
             return Message.Text(string)
         }
     }
 
-    class FromBytes(override val format: BinaryFormat) : Serializer() {
+    class FromBytes(override val format: BinaryFormat) : Binary {
         override fun <T> fromMessage(
             loader: DeserializationStrategy<T>,
-            message: Message
+            message: Message.Binary
         ): T {
-            val bytes = when (message) {
-                is Message.Binary -> message.value
-                is Message.Text -> {
-                    throw SerializationException(
-                        "Expected a binary WebSocket message, but received a text message"
-                    )
-                }
-            }
+            val bytes = message.value
             return format.decodeFromByteArray(loader, bytes)
         }
 
         override fun <T> toMessage(
             saver: SerializationStrategy<T>,
             value: T,
-        ): Message {
+        ): Message.Binary {
             val string = format.encodeToByteArray(saver, value)
             return Message.Binary(string)
         }
