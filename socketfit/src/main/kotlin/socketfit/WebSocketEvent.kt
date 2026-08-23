@@ -22,9 +22,9 @@ sealed class WebSocketEvent {
     data object Opened : WebSocketEvent()
 
     /**
-     * Indicates that a text WebSocket message has been received.
+     * Indicates that a text WebSocket message has been received from the peer.
      *
-     * @param data the received text message
+     * @param data  the text message received from the peer
      *
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6455#section-5.6">
      *   RFC 6455, Section 5.6, Data
@@ -38,9 +38,9 @@ sealed class WebSocketEvent {
     ) : WebSocketEvent()
 
     /**
-     * Indicates that a binary WebSocket message has been received.
+     * Indicates that a binary WebSocket message has been received from the peer.
      *
-     * @param data the received binary message
+     * @param data the binary message received from the peer
      *
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6455#section-5.6">
      *   RFC 6455, Section 5.6, Data
@@ -56,17 +56,11 @@ sealed class WebSocketEvent {
     /**
      * Indicates that a WebSocket closing handshake has been received from the peer.
      *
-     * @param code the WebSocket close status code received from the peer
-     * @param reason the WebSocket close reason received from the peer
+     * @param code the close status code received from the peer
+     * @param reason the close reason received from the peer
      *
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6455#section-1.4">
-     *   RFC 6455, Section 1.4, Closing Handshake
-     * </a>
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6455#section-7.1.2">
-     *   RFC 6455, Section 7.1.2, Start the WebSocket Closing Handshake
-     * </a>
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6455#section-5.5.1">
-     *   RFC 6455, Section 5.5.1, Close
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6455#section-7.1.4">
+     *   RFC 6455, Section 7.1.3, The WebSocket Closing Handshake is Started
      * </a>
      */
     data class Closing(
@@ -77,8 +71,8 @@ sealed class WebSocketEvent {
     /**
      * Indicates that the WebSocket connection has been closed.
      *
-     * @param code the WebSocket close status code
-     * @param reason the WebSocket close reason
+     * @param code the close status code received from the peer
+     * @param reason the close reason received from the peer
      *
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6455#section-7.1.4">
      *   RFC 6455, Section 7.1.4, The WebSocket Connection is Closed
