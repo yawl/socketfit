@@ -17,6 +17,6 @@ internal class SocketfitService(
                 append(method.name)
             }
         }
-        return serviceMethod.invoke(args)
+        return serviceMethod(args)
     }
 }

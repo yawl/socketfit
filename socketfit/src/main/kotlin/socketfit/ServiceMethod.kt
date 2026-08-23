@@ -12,7 +12,7 @@ interface ServiceMethod {
      * @param args the arguments passed to the method
      * @return the result of the invocation
      */
-    fun invoke(args: Array<Any>): Any
+    operator fun invoke(args: Array<Any>): Any
 
     /**
      * Factory for creating [ServiceMethod] instances from service method declarations.
