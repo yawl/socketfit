@@ -2,19 +2,15 @@ package socketfit.internal
 
 import socketfit.Service
 import socketfit.ServiceMethod
+import java.lang.reflect.Method
 
 internal class SocketfitServiceFactory(
     private val serviceMethodFactory: ServiceMethod.Factory,
 ) : Service.Factory {
     override fun create(service: Class<*>): Service {
         validateServiceInterface(service)
-        val serviceMethods = service
-            .declaredMethods
-            .associateWith { method ->
-                serviceMethodFactory.create(method)
-            }
         return SocketfitService(
-            serviceMethods = serviceMethods
+            loadServiceMethods(service)
         )
     }
 
@@ -56,5 +52,18 @@ internal class SocketfitServiceFactory(
 
             candidate.interfaces.forEach(check::addLast)
         }
+    }
+
+    private fun loadServiceMethods(
+        service: Class<*>
+    ): Map<Method, ServiceMethod> {
+        return service
+            .declaredMethods
+            .filterNot { method ->
+                method.isSynthetic
+            }
+            .associateWith { method ->
+                serviceMethodFactory.create(method)
+            }
     }
 }
