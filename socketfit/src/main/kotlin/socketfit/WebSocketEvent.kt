@@ -24,8 +24,6 @@ sealed class WebSocketEvent {
     /**
      * Indicates that a text WebSocket message has been received.
      *
-     * A text message contains UTF-8 encoded text.
-     *
      * @param data the received text message
      *
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6455#section-5.6">
@@ -56,13 +54,10 @@ sealed class WebSocketEvent {
     ) : WebSocketEvent()
 
     /**
-     * Indicates that the WebSocket closing handshake has been started.
+     * Indicates that a WebSocket closing handshake has been received from the peer.
      *
-     * The code and reason identify the close status received from the
-     * peer or used to initiate the closing handshake.
-     *
-     * @param code the WebSocket close status code
-     * @param reason the WebSocket close reason
+     * @param code the WebSocket close status code received from the peer
+     * @param reason the WebSocket close reason received from the peer
      *
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6455#section-1.4">
      *   RFC 6455, Section 1.4, Closing Handshake
