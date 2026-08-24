@@ -31,9 +31,9 @@ interface WebSocket {
     fun open()
 
     /**
-     * Sends a WebSocket message.
+     * Sends a WebSocket text message.
      *
-     * @param message the WebSocket message to send
+     * @param message the WebSocket text message to send
      * @return `true` if the message was enqueued, or `false` if the WebSocket is
      * not open or has failed
      *
@@ -41,7 +41,20 @@ interface WebSocket {
      *   RFC 6455, Section 5.6, Data
      * </a>
      */
-    fun send(message: Message): Boolean
+    fun send(message: Message.Text): Boolean
+
+    /**
+     * Sends a WebSocket binary message.
+     *
+     * @param message the WebSocket binary message to send
+     * @return `true` if the message was enqueued, or `false` if the WebSocket is
+     * not open or has failed
+     *
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6455#section-5.6">
+     *   RFC 6455, Section 5.6, Data
+     * </a>
+     */
+    fun send(message: Message.Binary): Boolean
 
     /**
      * Initiates the WebSocket closing handshake with the given status code.
