@@ -10,6 +10,16 @@ import java.lang.reflect.Type
  */
 interface Adapter<R, T> {
     /**
+     * Returns the value type that this adapter uses when converting the WebSocket event to a Java
+     * object. For example, the response type for `Flow<Repo>` is `Repo`. This type is
+     * used to prepare the `flow` passed to [adapt].
+     *
+     * Note: This is typically not the same type as the `returnType` provided to this
+     * adapter's factory.
+     */
+    fun responseType(): Type
+
+    /**
      * Returns an instance of [T] which delegates to [flow].
      */
     fun adapt(flow: Flow<R>): T
