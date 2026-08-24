@@ -20,6 +20,7 @@ dependencyResolutionManagement {
 
 include(":socketfit")
 
+include(":socketfit-converters:gson")
 include(":socketfit-converters:kotlinx-serialization")
 
 include(":socketfit-adapters:kotlinx-coroutines")
