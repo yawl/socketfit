@@ -5,7 +5,7 @@ import java.lang.reflect.Method
 /**
  * Represents the runtime implementation of a service method.
  */
-interface ServiceMethod {
+internal interface ServiceMethod {
     /**
      * Invokes this service method with the supplied arguments.
      *

@@ -5,7 +5,7 @@ import java.lang.reflect.Method
 /**
  * Represents the runtime implementation of a service created by [Socketfit.create].
  */
-interface Service {
+internal interface Service {
     /**
      * Invokes a service method with the supplied arguments.
      *
