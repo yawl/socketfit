@@ -28,6 +28,7 @@ internal class GsonTextFactory(
     }
 }
 
+@JvmName("create")
 fun createGsonTextConverterFactory(): Converter.TextFactory {
     return GsonTextFactory(Gson())
 }

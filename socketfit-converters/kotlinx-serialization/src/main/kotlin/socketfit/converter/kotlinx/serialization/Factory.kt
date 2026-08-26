@@ -59,6 +59,7 @@ internal class BinaryFactory(
  * it can handle all types. If you are mixing this with something else, you must add this instance
  * last to allow the other converters a chance to see their types.
  */
+@JvmName("create")
 fun StringFormat.asConverterFactory(): Converter.TextFactory {
     return TextFactory(FromString(this))
 }
@@ -70,6 +71,7 @@ fun StringFormat.asConverterFactory(): Converter.TextFactory {
  * it can handle all types. If you are mixing this with something else, you must add this instance
  * last to allow the other converters a chance to see their types.
  */
+@JvmName("create")
 fun BinaryFormat.asConverterFactory(): Converter.BinaryFactory {
     return BinaryFactory(FromBytes(this))
 }

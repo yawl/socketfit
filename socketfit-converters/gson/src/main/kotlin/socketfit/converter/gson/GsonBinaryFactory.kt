@@ -28,6 +28,7 @@ internal class GsonBinaryFactory(
     }
 }
 
+@JvmName("create")
 fun createGsonBinaryConverterFactory(): Converter.BinaryFactory {
     return GsonBinaryFactory(Gson())
 }
