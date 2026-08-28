@@ -25,4 +25,6 @@ include(":socketfit-converters:kotlinx-serialization")
 
 include(":socketfit-adapters:kotlinx-coroutines")
 
+include(":socketfit-backoff")
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
