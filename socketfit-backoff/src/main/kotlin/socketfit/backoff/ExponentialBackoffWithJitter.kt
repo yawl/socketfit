@@ -1,7 +1,6 @@
 package socketfit.backoff
 
 import socketfit.Backoff
-import socketfit.Jitter
 import kotlin.math.pow
 import kotlin.time.Duration
 

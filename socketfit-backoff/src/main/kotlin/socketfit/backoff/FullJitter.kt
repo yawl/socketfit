@@ -1,6 +1,5 @@
 package socketfit.backoff
 
-import socketfit.Jitter
 import kotlin.random.Random
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds

@@ -1,4 +1,4 @@
-package socketfit
+package socketfit.backoff
 
 import kotlin.time.Duration
 
